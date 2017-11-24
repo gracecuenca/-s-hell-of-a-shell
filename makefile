@@ -14,6 +14,5 @@ clean:
 
 cleanall:
 	rm exec
-	rm a.out
 	rm *~
 	clear
