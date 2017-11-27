@@ -5,7 +5,7 @@ int main(){
     - is important
     -> is subset
     --- is not needed, but will add flair
-   */
+  */
   
   /*
     -infinite loop so program never dies
@@ -16,6 +16,7 @@ int main(){
     ->might also req. that everything is separated w/ spaces
     ->flags might need to be separated too
   */
-
+  char *line="ab; hello friend; hi; hey stranger";
+  separate_commands(line);
   return 0;
 }

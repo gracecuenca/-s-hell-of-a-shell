@@ -1,5 +1,5 @@
 all:
-	gcc -o exec main.c
+	gcc -o exec core.c main.c
 
 run: all
 	./exec
