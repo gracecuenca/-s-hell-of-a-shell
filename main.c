@@ -16,7 +16,19 @@ int main(){
     ->might also req. that everything is separated w/ spaces
     ->flags might need to be separated too
   */
-  char *line="ab; hello friend; hi; hey stranger";
-  separate_commands(line);
+  char line[]="ab;hello friend;hi;hey stranger";
+  printf("%s\n", line);
+  int size = num_separated(line, ";");
+  char **command = separate_commands(line);
+  int j;
+  for(j = 0; j < size; j++){
+    printf("%s\n", command[j]);
+    int asdf = num_separated(command[j], " ");
+    char **arg = parse_args(command[j]);
+    int afg;
+    for(afg = 0; afg < asdf; afg++){
+      printf("\t%s\n", arg[afg]);
+    }
+  }
   return 0;
 }

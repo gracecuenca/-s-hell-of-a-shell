@@ -6,5 +6,6 @@
 #include <errno.h>
 #include <string.h>
 
-char *separate_commands(char *line);
-
+int num_separated(char *line, char *limit);
+char **separate_commands(char *line);
+char **parse_args(char *line);
