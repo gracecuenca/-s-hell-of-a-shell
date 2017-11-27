@@ -35,3 +35,12 @@ char **parse_args(char *line){
   
   return commands;
 }
+
+int cd(char **args){
+  if(!chdir(args[1])){
+    return 0;
+  }
+  //printf("Error number: %d\n", errno);
+  printf("%s\n",strerror(errno));
+  return 1; //shows problematic, but keeps shell running hopefully
+}
