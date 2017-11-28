@@ -5,7 +5,7 @@ int num_separated(char *line, char *limit){
   char *copy = malloc(sizeof(char*));
   //char *point = *copy;
   strcpy(copy, line);
-  
+
   for(i = 0; copy; i++){
     strsep(&copy, limit);
   }
@@ -21,7 +21,7 @@ char **separate_commands(char *line){
   for(i = 0; line; i++){
     commands[i] = strsep(&line, ";");
   }
-  
+
   return commands;
 }
 
@@ -32,7 +32,7 @@ char **parse_args(char *line){
   for(i = 0; line; i++){
     commands[i] = strsep(&line, " ");
   }
-  
+
   return commands;
 }
 
@@ -53,7 +53,7 @@ int execute(char **args){
     exit(0);
   }
   if(!strcmp(args[0], "cd")){
-    return cd(args[1]);
+    return cd(args);
   }
   int status;
   int f = fork();
