@@ -3,14 +3,14 @@
 int num_separated(char *line, char *limit){
   int i;
   char *copy = malloc(sizeof(char*));
-  char *point = copy;
+  //char *point = *copy;
   strcpy(copy, line);
   
   for(i = 0; copy; i++){
     strsep(&copy, limit);
   }
   //printf("%d\n", i);
-  free(point);
+  //free(point);
   return i;
 }
 
