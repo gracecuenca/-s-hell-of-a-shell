@@ -10,7 +10,7 @@ int num_separated(char *line, char *limit){
     strsep(&copy, limit);
   }
   //printf("%d\n", i);
-  free(copy);
+  free(point);
   return i;
 }
 
