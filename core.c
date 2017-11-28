@@ -2,7 +2,7 @@
 
 int num_separated(char *line, char *limit){
   int i;
-  char *copy = malloc(sizeof(char*));
+  char *copy = malloc(sizeof(char*) * strlen(line));
   //char *point = *copy;
   strcpy(copy, line);
 
@@ -16,7 +16,7 @@ int num_separated(char *line, char *limit){
 
 char **separate_commands(char *line){
   int i = num_separated(line, ";");
-  char **commands = calloc(i, sizeof(char **));
+  char **commands = calloc(i+1, sizeof(char **));
 
   for(i = 0; line; i++){
     commands[i] = strsep(&line, ";");
@@ -27,7 +27,7 @@ char **separate_commands(char *line){
 
 char **parse_args(char *line){
   int i = num_separated(line, " ");
-  char **commands = calloc(i, sizeof(char **));
+  char **commands = calloc(i+1, sizeof(char **));
 
   for(i = 0; line; i++){
     commands[i] = strsep(&line, " ");

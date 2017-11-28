@@ -6,7 +6,7 @@ int main(){
     -> is subset
     --- is not needed, but will add flair
   */
-  
+
   /*
     -infinite loop so program never dies
     ->make it so only parent survives until the end
