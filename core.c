@@ -44,3 +44,24 @@ int cd(char **args){
   printf("%s\n",strerror(errno));
   return 1; //shows problematic, but keeps shell running hopefully
 }
+
+//NEEDS EXECSSIVE TESTING
+int execute(char **args){
+  if(!strcmp(args[0],"exit")){
+    printf("/nlogout\n");
+    sleep(1);
+    exit(0);
+  }
+  if(!strcmp(args[0], "cd")){
+    return cd(args[1]);
+  }
+  int status;
+  int f = fork();
+  if(!f){
+    execvp(args[0], args);
+  }
+  else{
+    wait(&status);
+  }
+  return 1;
+}

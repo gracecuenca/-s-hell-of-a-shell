@@ -10,3 +10,4 @@ int num_separated(char *line, char *limit);
 char **separate_commands(char *line);
 char **parse_args(char *line);
 int cd(char **args);
+int execute(char **args);
