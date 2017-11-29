@@ -46,5 +46,7 @@ int main(){
   char firstcmd[] = "hi > hi.txt";
   command(firstcmd);
 
+  //char sec[] = "ls | wc";
+  //command(sec);
   return 0;
 }

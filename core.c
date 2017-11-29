@@ -68,8 +68,10 @@ int execute(char **args){
 
 void redir(char * file, int destination){
   int new_fd = open(file, O_RDWR | O_CREAT, 0666);
+  int x = dup(destination);
   //printf("destination: %d\t new fd: %d\n", destination, new_fd);
   dup2(new_fd, destination);
+  dup2(x, destination);
   close(new_fd);
 }
 
@@ -77,8 +79,17 @@ void pipin(char * first, char * second){
   FILE * fp1 = popen(first, "r");
   FILE * fp2 = popen(second, "w");
   //char path[1000];
-  //finish
+}
 
+char * trim(char * bush){
+  if(bush[0] == " "){
+    int i = 0;
+    int len = strlen(bush);
+    for(; i < len; i++){
+      bush[i] = bush[i+1];
+    }
+  }
+  return bush;
 }
 
 //started func to run single command, must come back to edit
@@ -87,14 +98,23 @@ void command(char * cmd){
   //checking for redirectional stuffies
   if(strchr(cmd, *c) != NULL){
     //printf("DEUGGING\n");
-    char **cmds = separate_commands(cmd," > ");
+    char **cmds = separate_commands(cmd,">");
     //printf("%s\t\n", cmds[3]);
+    cmds[1] = trim(cmds[1]);
+    int i = 0;
+    for(; i < 5; i++){
+      printf("%s\n", cmds[i]);
+    }
     redir(cmds[3], STDOUT_FILENO);
   }
   c = "<";
   if(strchr(cmd, *c) != NULL){
     char **cmds = separate_commands(cmd, " < ");
     redir(cmds[3], STDIN_FILENO);
-  }
+  } /*c = "|"
+  if(strchr(cmd, *p) != NULL){
+    char **cmds = separate_commands(cmd, " | ");
+    printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
+  }*/
   //ADD REST OF RUNNNING COMMAND OPTIONS
 }
