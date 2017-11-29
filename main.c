@@ -16,7 +16,19 @@ int main(){
     ->might also req. that everything is separated w/ spaces
     ->flags might need to be separated too
   */
-  char line[]="ab;hello friend;hi;hey stranger";
+  //char line[]="ab;hello friend;hi;hey stranger";
+  char test[] = "ls -l ;echo hello";
+  printf("commands being tested: %s\n", test);
+  int size = num_separated(test, ";");
+  printf("num commands: %d\n", size);
+  char ** commands = separate_commands(test, ";");
+  int i;
+  for(i=0; i < size; i++){
+    printf("command: %s\n", commands[i]);
+    execvp(commands[i], commands);
+  }
+
+  /*
   printf("%s\n", line);
   int size = num_separated(line, ";");
   char **command = separate_commands(line);
@@ -30,5 +42,9 @@ int main(){
       printf("\t%s\n", arg[afg]);
     }
   }
+  */
+  char firstcmd[] = "hi > hi.txt";
+  command(firstcmd);
+
   return 0;
 }
