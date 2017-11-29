@@ -27,14 +27,14 @@ char **separate_commands(char *line, char *separator){
   return commands;
 }
 /*
-char **parse_args(char *line, char * separator){
+  char **parse_args(char *line, char * separator){
   int i = num_separated(line, separator);
   char **commands = calloc(i+1, sizeof(char **));
   for(i = 0; line; i++){
-    commands[i] = strsep(&line, separator);
+  commands[i] = strsep(&line, separator);
   }
   return commands;
-}
+  }
 */
 int cd(char **args){
   if(!chdir(args[1])){
@@ -77,19 +77,22 @@ void pipin(char * first, char * second){
   FILE * fp1 = popen(first, "r");
   FILE * fp2 = popen(second, "w");
   //char path[1000];
-//finish
+  //finish
 
 }
 
 //started func to run single command, must come back to edit
 void command(char * cmd){
+  char *c = ">";
   //checking for redirectional stuffies
-  if(strstr(cmd, ">")){
+  if(strchr(cmd, *c) != NULL){
+    //printf("DEUGGING\n");
     char **cmds = separate_commands(cmd," > ");
     //printf("%s\t\n", cmds[3]);
     redir(cmds[3], STDOUT_FILENO);
   }
-  if(strchr(cmd, "<")){
+  c = "<";
+  if(strchr(cmd, *c) != NULL){
     char **cmds = separate_commands(cmd, " < ");
     redir(cmds[3], STDIN_FILENO);
   }
