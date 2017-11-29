@@ -15,3 +15,4 @@ char **parse_args(char *line, char *separator);
 int cd(char **args);
 int execute(char **args);
 void redirection(char * direction, int destination);
+void command(char * cmd);

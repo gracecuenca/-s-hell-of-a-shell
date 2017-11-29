@@ -82,11 +82,9 @@ void pipin(char * first, char * second){
 }
 
 char * trim(char * bush){
-  if(bush[0] == " "){
-    int i = 0;
-    int len = strlen(bush);
-    for(; i < len; i++){
-      bush[i] = bush[i+1];
+  if(bush[0] == ' '){
+    while(bush[0] == ' '){
+      bush = &bush[1];
     }
   }
   return bush;
@@ -97,7 +95,7 @@ void command(char * cmd){
   char *c = ">";
   //checking for redirectional stuffies
   if(strchr(cmd, *c) != NULL){
-    //printf("DEUGGING\n");
+    printf("DEUGGING\n");
     char **cmds = separate_commands(cmd,">");
     //printf("%s\t\n", cmds[3]);
     cmds[1] = trim(cmds[1]);
@@ -112,9 +110,9 @@ void command(char * cmd){
     char **cmds = separate_commands(cmd, " < ");
     redir(cmds[3], STDIN_FILENO);
   } /*c = "|"
-  if(strchr(cmd, *p) != NULL){
-    char **cmds = separate_commands(cmd, " | ");
-    printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
-  }*/
-  //ADD REST OF RUNNNING COMMAND OPTIONS
+      if(strchr(cmd, *p) != NULL){
+      char **cmds = separate_commands(cmd, " | ");
+      printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
+      }*/
+    //ADD REST OF RUNNNING COMMAND OPTIONS
 }

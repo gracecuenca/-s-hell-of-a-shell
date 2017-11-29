@@ -43,7 +43,7 @@ int main(){
     }
   }
   */
-  char firstcmd[] = "hi > hi.txt";
+  char *firstcmd = "hi > hi.txt";
   command(firstcmd);
 
   //char sec[] = "ls | wc";
