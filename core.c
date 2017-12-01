@@ -88,7 +88,7 @@ char * trim(char * bush){
     while(bush[i] == ' '){
       i++;
     }
-    printf("MESG: TRIMMING DONE\n");
+    printf("MSG: TRIMMING DONE\n");
   }
   return &bush[i];
 }
@@ -98,7 +98,7 @@ void command(char * cmd){
   char *c = ">";
   //checking for redirectional stuffies
   if(strchr(cmd, *c) != NULL){
-    printf("DEUGGING\n");
+    printf("MSG: If for > is being run\n");
     char **cmds = separate_commands(cmd,">");
     //printf("%s\t\n", cmds[3]);
     cmds[1] = trim(cmds[1]);
@@ -106,7 +106,7 @@ void command(char * cmd){
     for(; i < 2; i++){
       printf("%s\n", cmds[i]);
     }
-    redir(cmds[3], STDOUT_FILENO);
+    redir(cmds[1], STDOUT_FILENO);
   }
   c = "<";
   if(strchr(cmd, *c) != NULL){
