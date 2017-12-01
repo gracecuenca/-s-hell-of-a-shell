@@ -81,13 +81,16 @@ void pipin(char * first, char * second){
   //char path[1000];
 }
 
+//trimming trailing is causing too many bugs
 char * trim(char * bush){
-  if(bush[0] == ' '){
-    while(bush[0] == ' '){
-      bush = &bush[1];
+  int i = 0;
+  if(bush[i] == ' '){
+    while(bush[i] == ' '){
+      i++;
     }
+    printf("MESG: TRIMMING DONE\n");
   }
-  return bush;
+  return &bush[i];
 }
 
 //started func to run single command, must come back to edit
@@ -100,7 +103,7 @@ void command(char * cmd){
     //printf("%s\t\n", cmds[3]);
     cmds[1] = trim(cmds[1]);
     int i = 0;
-    for(; i < 5; i++){
+    for(; i < 2; i++){
       printf("%s\n", cmds[i]);
     }
     redir(cmds[3], STDOUT_FILENO);
