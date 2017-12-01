@@ -71,6 +71,7 @@ void redir(char * file, int destination){
   int x = dup(destination);
   //printf("destination: %d\t new fd: %d\n", destination, new_fd);
   dup2(new_fd, destination);
+  printf("%s\n", file);
   dup2(x, destination);
   close(new_fd);
 }
@@ -106,7 +107,7 @@ void command(char * cmd){
     for(; i < 2; i++){
       printf("%s\n", cmds[i]);
     }
-    redir(cmds[1], STDOUT_FILENO);
+    redir(cmds[0], STDOUT_FILENO);
   }
   c = "<";
   if(strchr(cmd, *c) != NULL){

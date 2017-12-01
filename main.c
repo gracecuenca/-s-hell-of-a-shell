@@ -43,7 +43,7 @@ int main(){
     }
   }
   */
-  char firstcmd[] = "hi friend > hi.txt";
+  char firstcmd[] = "grace > hi.txt";
   command(firstcmd);
   printf("MSG: Should be the end");
 
