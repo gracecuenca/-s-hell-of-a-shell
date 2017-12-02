@@ -136,8 +136,12 @@ int path(){
   int f = fork();
   if(!f){
     char cwd[1024];
-    getcwd(cwd, sizeof(cwd));
-    printf("%s$ ", cwd);
+    if (getcwd(cwd, sizeof(cwd)) != NULL){
+      printf("%s$ ", cwd);
+    }
+    else {
+      perror("Technical Difficulties with Path");
+    }
     exit(0);
 }
   }
