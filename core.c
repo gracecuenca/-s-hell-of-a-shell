@@ -135,11 +135,14 @@ int path(){
   int status;
   int f = fork();
   if(!f){
-    execlp("/bin/sh", "/bin/sh", "-c", "pwd | tr -d '\n'", NULL);
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    printf("%s$ ", cwd);
+    exit(0);
+}
   }
   else{
     wait(&status);
-    printf("$ ");
   }
   return 0;
 }
