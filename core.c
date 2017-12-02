@@ -66,12 +66,12 @@ int execute(char **args){
   return 1;
 }
 
-void redir(char * file, int destination){
-  int new_fd = open(file, O_RDWR | O_CREAT, 0666);
+void redir(char ** file, int destination){
+  int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
   int x = dup(destination);
   //printf("destination: %d\t new fd: %d\n", destination, new_fd);
   dup2(new_fd, destination);
-  printf("%s\n", file);
+  printf("%s\n", file[0]);
   dup2(x, destination);
   close(new_fd);
 }
@@ -107,12 +107,12 @@ void command(char * cmd){
     for(; i < 2; i++){
       printf("%s\n", cmds[i]);
     }
-    redir(cmds[0], STDOUT_FILENO);
+    redir(cmds, STDOUT_FILENO);
   }
   c = "<";
   if(strchr(cmd, *c) != NULL){
     char **cmds = separate_commands(cmd, " < ");
-    redir(cmds[3], STDIN_FILENO);
+    redir(cmds, STDIN_FILENO);
   } /*c = "|"
       if(strchr(cmd, *p) != NULL){
       char **cmds = separate_commands(cmd, " | ");
