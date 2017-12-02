@@ -23,19 +23,11 @@ char **separate_commands(char *line, char *separator){
   char **commands = calloc(i+1, sizeof(char **));
   for(i = 0; line; i++){
     commands[i] = strsep(&line, separator);
+    printf("SC:/t%s\n", commands[i]);
   }
   return commands;
 }
-/*
-  char **parse_args(char *line, char * separator){
-  int i = num_separated(line, separator);
-  char **commands = calloc(i+1, sizeof(char **));
-  for(i = 0; line; i++){
-  commands[i] = strsep(&line, separator);
-  }
-  return commands;
-  }
-*/
+
 int cd(char **args){
   if(!chdir(args[1])){
     return 0;
@@ -67,13 +59,25 @@ int execute(char **args){
 }
 
 void redir(char ** file, int destination){
-  int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
-  int x = dup(destination);
-  //printf("destination: %d\t new fd: %d\n", destination, new_fd);
-  dup2(new_fd, destination);
-  printf("%s\n", file[0]);
-  dup2(x, destination);
-  close(new_fd);
+  if(destination == STDOUT_FILENO){
+    int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
+    int x = dup(destination);
+    dup2(new_fd, destination);
+    printf("%s\n", file[0]);
+    dup2(x, destination);
+    close(new_fd);
+  }
+  if(destination == STDIN_FILENO){
+    //im tired, stuff ought to work with scanf, us it properly though
+    /*
+    int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
+    int x = dup(destination);
+    dup2(new_fd, destination);
+    scanf("%s\n", file[0]);
+    dup2(x, destination);
+    close(new_fd);
+    */
+  }
 }
 
 void pipin(char * first, char * second){
@@ -97,7 +101,6 @@ char * trim(char * bush){
 //started func to run single command, must come back to edit
 void command(char * cmd){
   char *c = ">";
-  //checking for redirectional stuffies
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for > is being run\n");
     char **cmds = separate_commands(cmd,">");
@@ -109,14 +112,34 @@ void command(char * cmd){
     }
     redir(cmds, STDOUT_FILENO);
   }
+  
   c = "<";
   if(strchr(cmd, *c) != NULL){
-    char **cmds = separate_commands(cmd, " < ");
+    printf("MSG: If for > is being run\n");
+    char **cmds = separate_commands(cmd, "<");
+    int i = 0;
+    for(; i < 2; i++){
+      printf("%s\n", cmds[i]);
+    }
     redir(cmds, STDIN_FILENO);
-  } /*c = "|"
-      if(strchr(cmd, *p) != NULL){
-      char **cmds = separate_commands(cmd, " | ");
-      printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
-      }*/
-    //ADD REST OF RUNNNING COMMAND OPTIONS
+  }
+  /*c = "|"
+    if(strchr(cmd, *p) != NULL){
+    char **cmds = separate_commands(cmd, " | ");
+    printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
+    }*/
+  //ADD REST OF RUNNNING COMMAND OPTIONS
+}
+
+int path(){
+  int status;
+  int f = fork();
+  if(!f){
+    execlp("/bin/sh", "/bin/sh", "-c", "pwd | tr -d '\n'", NULL);
+  }
+  else{
+    wait(&status);
+    printf("$ ");
+  }
+  return 0;
 }
