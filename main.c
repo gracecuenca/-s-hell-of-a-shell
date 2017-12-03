@@ -1,5 +1,13 @@
 #include "headers.h"
 
+static void sighandler(int signo){
+  //user wants to exit
+  if (signo == SIGINT){
+    printf("\nexiting due to sigint :( cya later\n");
+    exit(0);
+  }
+}
+
 int main(){
   //INSTRUCTIONS, DONT ERASE UNTIL THE END
   /*
@@ -17,6 +25,7 @@ int main(){
   */
 
   //QUICK TESTING
+  /*
   char test[] = "ls -l ; echo hello";
   printf("commands being tested: %s\n", test);
   int size = num_separated(test, ";");
@@ -34,7 +43,7 @@ int main(){
 
   char seccmd[] = "./a.out < hi.txt";
   command(seccmd);
-
+*/
   //char sec[] = "ls | wc";
   //command(sec);
 
@@ -58,7 +67,6 @@ int main(){
   */
 
   //ACTUAL SHELL STARTS HERE!
-  /*
     char line [100];
     while (1) {
     signal(SIGINT, sighandler);
@@ -66,13 +74,12 @@ int main(){
     fgets(line, sizeof(line), stdin);
     //DEBUGG NEED TO CLEAN LATER
     printf("%s\n", line);
-    int l = strlen (string);
-    if (l > 0 && string [l - 1] == '\n'){
-    string [l - 1] = '\0';
+    int l = strlen(line);
+    if (l > 0 && line[l - 1] == '\n'){
+    line[l - 1] = '\0';
     }
     char ** args = separate_commands(line, ";");
     int i = 0;
     }
-  */
   return 0;
 }

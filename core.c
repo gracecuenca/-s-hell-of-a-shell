@@ -1,13 +1,5 @@
 #include "headers.h"
 
-static void sighandler(int signo){
-  //user wants to exit
-  if (signo == SIGINT){
-    printf("exiting due to sigint :( cya later\n");
-    exit(0);
-  }
-}
-
 int num_separated(char *line, char *separator){
   int i;
   char *copy = malloc(sizeof(char*) * strlen(line));
@@ -24,7 +16,7 @@ char **separate_commands(char *line, char *separator){
   for(i = 0; line; i++){
     commands[i] = strsep(&line, separator);
     commands[i] = trim(commands[i]);
-    printf("SC:%s\n", commands[i]);
+    //printf("SC:%s\n", commands[i]);
   }
   return commands;
 }
