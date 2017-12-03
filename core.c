@@ -70,14 +70,12 @@ void redir(char ** file, int destination){
   }
   if(destination == STDIN_FILENO){
     //im tired, stuff ought to work with scanf, us it properly though
-    /*
     int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
     int x = dup(destination);
     dup2(new_fd, destination);
     scanf("%s\n", file[0]);
     dup2(x, destination);
     close(new_fd);
-    */
   }
 }
 
@@ -115,7 +113,7 @@ void command(char * cmd){
 
   c = "<";
   if(strchr(cmd, *c) != NULL){
-    printf("MSG: If for > is being run\n");
+    printf("MSG: If for < is being run\n");
     char **cmds = separate_commands(cmd, "<");
     int i = 0;
     for(; i < 2; i++){

@@ -16,7 +16,6 @@ int main(){
     ->flags might need to be separated too
   */
 
-
   //QUICK TESTING
   char test[] = "ls -l ; echo hello";
   printf("commands being tested: %s\n", test);
@@ -33,12 +32,11 @@ int main(){
   command(firstcmd);
   printf("MSG: Should be the end\n");
 
+  char seccmd[] = "./a.out < hi.txt";
+  command(seccmd);
+
   //char sec[] = "ls | wc";
   //command(sec);
-
-
-
-
 
   //trying to chain them together
   /*
@@ -58,9 +56,6 @@ int main(){
     }
 
   */
-
-
-
 
   //ACTUAL SHELL STARTS HERE!
   /*
