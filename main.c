@@ -18,7 +18,7 @@ int main(){
 
 
   //QUICK TESTING
-  char test[] = "ls -l ;echo hello";
+  char test[] = "ls -l ; echo hello";
   printf("commands being tested: %s\n", test);
   int size = num_separated(test, ";");
   printf("num commands: %d\n", size);
@@ -31,14 +31,14 @@ int main(){
 
   char firstcmd[] = "grace > hi.txt";
   command(firstcmd);
-  printf("MSG: Should be the end");
+  printf("MSG: Should be the end\n");
 
   //char sec[] = "ls | wc";
   //command(sec);
 
 
 
-  
+
 
   //trying to chain them together
   /*
@@ -61,7 +61,7 @@ int main(){
 
 
 
-  
+
   //ACTUAL SHELL STARTS HERE!
   /*
     char line [100];

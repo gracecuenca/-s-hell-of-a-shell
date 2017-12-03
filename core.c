@@ -23,7 +23,7 @@ char **separate_commands(char *line, char *separator){
   char **commands = calloc(i+1, sizeof(char **));
   for(i = 0; line; i++){
     commands[i] = strsep(&line, separator);
-    printf("SC:/t%s\n", commands[i]);
+    printf("SC:\t%s\n", commands[i]);
   }
   return commands;
 }
@@ -112,7 +112,7 @@ void command(char * cmd){
     }
     redir(cmds, STDOUT_FILENO);
   }
-  
+
   c = "<";
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for > is being run\n");
@@ -143,7 +143,6 @@ int path(){
       perror("Technical Difficulties with Path");
     }
     exit(0);
-}
   }
   else{
     wait(&status);

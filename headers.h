@@ -16,5 +16,4 @@ int cd(char **args);
 int execute(char **args);
 void redirection(char * direction, int destination);
 void command(char * cmd);
-
 int path();
