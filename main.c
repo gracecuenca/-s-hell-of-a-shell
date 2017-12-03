@@ -3,8 +3,30 @@
 static void sighandler(int signo){
   //user wants to exit
   if (signo == SIGINT){
-    printf("\nexiting due to sigint :( cya later\n");
+    printf("\nlogout\n");
     exit(0);
+  }
+}
+
+void run(){
+  char line [100];
+  fgets(line, sizeof(line), stdin);
+  //DEBUGG NEED TO CLEAN LATER
+  printf("%s\n", line);
+  int l = strlen(line);
+  if (l > 0 && line[l - 1] == '\n'){
+    line[l - 1] = 0; //replaces new line with null
+  }
+  int size = num_separated(line, ";");
+  char ** args = separate_commands(line, ";");
+  int i;
+  for(i = 0; i < size; i++){
+    int size2 = num_separated(args[i], " ");
+    char ** arg = separate_commands(args[i], " ");
+    int j;
+    for(j = 0; j < size2; j++){
+      execute(arg);
+    }
   }
 }
 
@@ -67,19 +89,10 @@ int main(){
   */
 
   //ACTUAL SHELL STARTS HERE!
-    char line [100];
-    while (1) {
+  while (1) {
     signal(SIGINT, sighandler);
     path();
-    fgets(line, sizeof(line), stdin);
-    //DEBUGG NEED TO CLEAN LATER
-    printf("%s\n", line);
-    int l = strlen(line);
-    if (l > 0 && line[l - 1] == '\n'){
-    line[l - 1] = '\0';
-    }
-    char ** args = separate_commands(line, ";");
-    int i = 0;
-    }
+    run();
+  }
   return 0;
 }
