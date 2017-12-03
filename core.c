@@ -51,7 +51,9 @@ int execute(char **args){
   int status;
   int f = fork();
   if(!f){
-    execvp(args[0], args);
+    if(execvp(args[0], args) == -1){
+      printf("%s: command not found\n", args[0]);
+    }
   }
   else{
     wait(&status);
@@ -77,12 +79,18 @@ void redir(char ** file, int destination){
     dup2(x, destination);
     close(new_fd);
   }
+
 }
 
 void pipin(char * first, char * second){
   FILE * fp1 = popen(first, "r");
   FILE * fp2 = popen(second, "w");
-  //char path[1000];
+  char path[1000];
+  while(fgets(path, sizeof(path), fp1)){
+    fprintf(fp2, "%s", path);
+  }
+  pclose(fp1);
+  pclose(fp2);
 }
 
 //trimming trailing is causing too many bugs
@@ -121,11 +129,12 @@ void command(char * cmd){
     }
     redir(cmds, STDIN_FILENO);
   }
-  /*c = "|"
-    if(strchr(cmd, *p) != NULL){
-    char **cmds = separate_commands(cmd, " | ");
-    printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
-    }*/
+  c = "|";
+  if(strchr(cmd, *c) != NULL){
+    char **cmds = separate_commands(cmd, "|");
+    //printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
+    pipin(cmds[0], cmds[1]);
+  }
   //ADD REST OF RUNNNING COMMAND OPTIONS
 }
 

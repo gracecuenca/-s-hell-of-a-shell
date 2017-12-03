@@ -61,6 +61,7 @@ int main(){
   /*
     char line [100];
     while (1) {
+    signal(SIGINT, sighandler);
     path();
     fgets(line, sizeof(line), stdin);
     //DEBUGG NEED TO CLEAN LATER
