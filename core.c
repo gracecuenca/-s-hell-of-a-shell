@@ -23,7 +23,8 @@ char **separate_commands(char *line, char *separator){
   char **commands = calloc(i+1, sizeof(char **));
   for(i = 0; line; i++){
     commands[i] = strsep(&line, separator);
-    printf("SC:\t%s\n", commands[i]);
+    commands[i] = trim(commands[i]);
+    printf("SC:%s\n", commands[i]);
   }
   return commands;
 }
@@ -93,7 +94,7 @@ char * trim(char * bush){
     while(bush[i] == ' '){
       i++;
     }
-    printf("MSG: TRIMMING DONE\n");
+    //printf("MSG: TRIMMING DONE\n");
   }
   return &bush[i];
 }
@@ -104,7 +105,6 @@ void command(char * cmd){
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for > is being run\n");
     char **cmds = separate_commands(cmd,">");
-    //printf("%s\t\n", cmds[3]);
     cmds[1] = trim(cmds[1]);
     int i = 0;
     for(; i < 2; i++){
