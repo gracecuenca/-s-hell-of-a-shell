@@ -13,6 +13,7 @@
 
 ## Bugs
 - Entering `ls > hi.txt` doesn't execute `ls` because of the trailing " " after the ls. User must instead input `ls> hi.txt`
+- Exiting using Ctrl + D is bad
 
 ## Files & Function Headers
 ### main.c
