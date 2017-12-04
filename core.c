@@ -33,7 +33,7 @@ int cd(char **args){
 //NEEDS EXECSSIVE TESTING
 int execute(char **args){
   if(!strcmp(args[0],"exit")){
-    printf("/nlogout\n");
+    printf("\nlogout\n");
     sleep(1);
     exit(0);
   }
