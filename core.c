@@ -43,14 +43,12 @@ int execute(char **args){
   int status;
   int f = fork();
   if(!f){
-    printf("[child]%d\t%d\n", getpid(),f);
     if(execvp(args[0], args) == -1){
       printf("%s: command not found\n", args[0]);
     }
     exit(0);
   }
   else{
-    printf("[parent]%d\t%d\n", getpid(),f);
     wait(&status);
   }
   return 1;
@@ -79,7 +77,7 @@ void redir(char ** file, int destination){
   int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
   int x = dup(destination);
   dup2(new_fd, destination);
-  //run()
+  run(file[0]);
   dup2(x, destination);
   close(new_fd);
 
@@ -115,12 +113,6 @@ int command(char * cmd){
     printf("MSG: If for > is being run\n");
     char **cmds = separate_commands(cmd,">");
     cmds[1] = trim(cmds[1]);
-    /*
-    int i = 0;
-    for(; i < 2; i++){
-      printf("%s\n", cmds[i]);
-    }
-    */
     redir(cmds, STDOUT_FILENO);
     return 1;
   }
@@ -129,23 +121,15 @@ int command(char * cmd){
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for < is being run\n");
     char **cmds = separate_commands(cmd, "<");
-    /*
-    int i = 0;
-    for(; i < 2; i++){
-      printf("%s\n", cmds[i]);
-    }
-    */
     redir(cmds, STDIN_FILENO);
     return 1;
   }
   c = "|";
   if(strchr(cmd, *c) != NULL){
     char **cmds = separate_commands(cmd, "|");
-    //printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
     pipin(cmds[0], cmds[1]);
     return 1;
   }
-  //ADD REST OF RUNNNING COMMAND OPTIONS
   return 0;
 }
 
