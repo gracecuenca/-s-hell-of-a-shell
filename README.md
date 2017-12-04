@@ -12,7 +12,8 @@
 ## Attempted
 - Attempted to tackle all cases of trailing spaces but it didn't work out
 - Attempted to make `run()` and `main()` the only functions within main.c but got error with `sighandler()` when it wasn't in the same file as main.c
-- Attempted multiple pipes but it would only execute the first one
+- Attempted multiple pipes like `ls | wc | less` but it would only execute the first one
+- Attempted chain redirection like `cat> hello < foo` but it would create a file called `hello < foo` instead of, in a sense, `cp hello foo` 
 - Attempted to make redirection of STDOUT end with ctrl + C, but that resulted in a forever loop of bad commands, and it went horribly wrong. We took this out completely...
 
 ## Bugs
