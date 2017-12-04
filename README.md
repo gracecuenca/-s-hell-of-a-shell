@@ -10,11 +10,15 @@
 ## Attempted
 - Attempted to tackle all cases of trailing spaces but it didn't work out
 - Attempted to make `run()` and `main()` the only functions within main.c but got error with `sighandler()` when it wasn't in the same file as main.c
+- Attempted multiple pipes but it would only execute the first one
+- Attempted to make redirection of STDOUT end with ctrl + C, but that resulted in a forever loop of bad commands, and it went horribly wrong. We took this out completely...
 
 ## Bugs
-- Entering `ls > hi.txt` doesn't execute `ls` because of the trailing " " after the ls. User must instead input `ls> hi.txt`
+- Entering `ls > hi.txt` doesn't execute `ls` because of the trailing " " after the ls. User must instead input `ls> hi.txt`. This is the case for `ls ` (with a space at the end) vs `ls` as well.
 - Exiting using Ctrl + D is bad
 - Piping limited to single pipes
+- When using `cat> textfile`, send Ctrl + D for EOF instead of trying to use Ctrl + C, or else it terminates the whole application
+- Sometimes created files have an extra space to them. You can still write to them without accounting for that, but can't remove them without accounting for it. This usually happens when you try to make two files of the same name in the same directory, when you hit space by accident, etc.
 
 ## Files & Function Headers
 ### main.c
@@ -65,7 +69,7 @@ Utilizes chdir to switch between directories
 /*======== int execute() ==========
 Inputs:  char **args
 Returns: nothing
-Constantly chekcs inputs and utilizers execvp() to run commands
+Constantly checks inputs and utilizers execvp() to run commands
 =================================*/
 
 /*======== void redir() ==========
@@ -100,3 +104,6 @@ Returns: nothing
 Displays the user's cwd
 ==================================*/
 ```
+
+### headers.h
+Contains all `#include` and most function headers to allow for multiple files to work harmoniously 
