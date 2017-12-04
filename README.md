@@ -3,9 +3,11 @@
 ## Features!
 - Forks and execs commands
 - Can separate multiple commands on a line
-- Redirection with > and <
-- Simple pipes | working
+- Redirection with `>` and `<`
+- Simple pipes `|` working
 - Can see current working directory
+- Can use built-in shell commands like `cd` or `exit`
+- Accounts for invalid commands like entering just `hi friend` would be `hi: command not found`
 
 ## Attempted
 - Attempted to tackle all cases of trailing spaces but it didn't work out
