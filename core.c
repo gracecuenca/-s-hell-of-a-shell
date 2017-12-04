@@ -43,27 +43,30 @@ int execute(char **args){
   int status;
   int f = fork();
   if(!f){
+    printf("[child]%d\t%d\n", getpid(),f);
     if(execvp(args[0], args) == -1){
       printf("%s: command not found\n", args[0]);
     }
     exit(0);
   }
   else{
+    printf("[parent]%d\t%d\n", getpid(),f);
     wait(&status);
   }
   return 1;
 }
 
 void redir(char ** file, int destination){
-  if(destination == STDOUT_FILENO){
+  /*
+    if(destination == STDOUT_FILENO){
     int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
     int x = dup(destination);
     dup2(new_fd, destination);
     printf("%s\n", file[0]);
     dup2(x, destination);
     close(new_fd);
-  }
-  if(destination == STDIN_FILENO){
+    }
+    if(destination == STDIN_FILENO){
     //im tired, stuff ought to work with scanf, us it properly though
     int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
     int x = dup(destination);
@@ -71,7 +74,14 @@ void redir(char ** file, int destination){
     scanf("%s\n", file[0]);
     dup2(x, destination);
     close(new_fd);
-  }
+    }
+  */
+  int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
+  int x = dup(destination);
+  dup2(new_fd, destination);
+  //run()
+  dup2(x, destination);
+  close(new_fd);
 
 }
 
@@ -105,10 +115,12 @@ int command(char * cmd){
     printf("MSG: If for > is being run\n");
     char **cmds = separate_commands(cmd,">");
     cmds[1] = trim(cmds[1]);
+    /*
     int i = 0;
     for(; i < 2; i++){
       printf("%s\n", cmds[i]);
     }
+    */
     redir(cmds, STDOUT_FILENO);
     return 1;
   }
@@ -117,10 +129,12 @@ int command(char * cmd){
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for < is being run\n");
     char **cmds = separate_commands(cmd, "<");
+    /*
     int i = 0;
     for(; i < 2; i++){
       printf("%s\n", cmds[i]);
     }
+    */
     redir(cmds, STDIN_FILENO);
     return 1;
   }

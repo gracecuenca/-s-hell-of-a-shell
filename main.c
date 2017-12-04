@@ -12,7 +12,7 @@ void run(){
   char line [100];
   fgets(line, sizeof(line), stdin);
   //DEBUGG NEED TO CLEAN LATER
-  printf("%s\n", line);
+  //printf("%s\n", line);
   int l = strlen(line);
   if (l > 0 && line[l - 1] == '\n'){
     line[l - 1] = 0; //replaces new line with null
@@ -22,12 +22,17 @@ void run(){
   int i;
   for(i = 0; i < size; i++){
     if(!command(args[i])){
+      char ** arg = separate_commands(args[i], " ");
+      execute(arg);
+      /*
       int size2 = num_separated(args[i], " ");
       char ** arg = separate_commands(args[i], " ");
       int j;
+      printf("SIZE: %s\n", arg);
       for(j = 0; j < size2; j++){
 	execute(arg);
       }
+      */
     }
   }
 }
