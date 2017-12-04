@@ -129,7 +129,7 @@ Function that executes redirection and piping by detecting presence of '<', '>',
 int command(char * cmd){
   char *c = ">";
   if(strchr(cmd, *c) != NULL){
-    printf("MSG: If for > is being run\n");
+    //printf("MSG: If for > is being run\n");
     char **cmds = separate_commands(cmd,">");
     cmds[1] = trim(cmds[1]);
     redir(cmds, STDOUT_FILENO);
@@ -137,7 +137,7 @@ int command(char * cmd){
   }
   c = "<";
   if(strchr(cmd, *c) != NULL){
-    printf("MSG: If for < is being run\n");
+    //printf("MSG: If for < is being run\n");
     char **cmds = separate_commands(cmd, "<");
     redir(cmds, STDIN_FILENO);
     return 1;
