@@ -2,7 +2,7 @@
 
 ## Features!
 - Forks and execs commands
-- Can separate multiple commands on a line
+- Can separate multiple commands on a line (using `;`)
 - Redirection with `>` and `<`
 - Simple pipes `|` working
 - Can see current working directory
