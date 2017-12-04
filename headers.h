@@ -19,7 +19,7 @@ int cd(char **args);
 
 int execute(char **args);
 
-void redir(char * direction, int destination);
+void redir(char ** file, int destination);
 
 void pipin(char * first, char * second);
 
