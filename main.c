@@ -21,11 +21,13 @@ void run(){
   char ** args = separate_commands(line, ";");
   int i;
   for(i = 0; i < size; i++){
-    int size2 = num_separated(args[i], " ");
-    char ** arg = separate_commands(args[i], " ");
-    int j;
-    for(j = 0; j < size2; j++){
-      execute(arg);
+    if(!command(args[i])){
+      int size2 = num_separated(args[i], " ");
+      char ** arg = separate_commands(args[i], " ");
+      int j;
+      for(j = 0; j < size2; j++){
+	execute(arg);
+      }
     }
   }
 }
@@ -48,24 +50,24 @@ int main(){
 
   //QUICK TESTING
   /*
-  char test[] = "ls -l ; echo hello";
-  printf("commands being tested: %s\n", test);
-  int size = num_separated(test, ";");
-  printf("num commands: %d\n", size);
-  char ** commands = separate_commands(test, ";");
-  int i;
-  for(i=0; i < size; i++){
+    char test[] = "ls -l ; echo hello";
+    printf("commands being tested: %s\n", test);
+    int size = num_separated(test, ";");
+    printf("num commands: %d\n", size);
+    char ** commands = separate_commands(test, ";");
+    int i;
+    for(i=0; i < size; i++){
     printf("command: %s\n", commands[i]);
     execvp(commands[i], commands);
-  }
+    }
 
-  char firstcmd[] = "grace > hi.txt";
-  command(firstcmd);
-  printf("MSG: Should be the end\n");
+    char firstcmd[] = "grace > hi.txt";
+    command(firstcmd);
+    printf("MSG: Should be the end\n");
 
-  char seccmd[] = "./a.out < hi.txt";
-  command(seccmd);
-*/
+    char seccmd[] = "./a.out < hi.txt";
+    command(seccmd);
+  */
   //char sec[] = "ls | wc";
   //command(sec);
 

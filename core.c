@@ -46,6 +46,7 @@ int execute(char **args){
     if(execvp(args[0], args) == -1){
       printf("%s: command not found\n", args[0]);
     }
+    exit(0);
   }
   else{
     wait(&status);
@@ -98,7 +99,7 @@ char * trim(char * bush){
 }
 
 //started func to run single command, must come back to edit
-void command(char * cmd){
+int command(char * cmd){
   char *c = ">";
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for > is being run\n");
@@ -109,6 +110,7 @@ void command(char * cmd){
       printf("%s\n", cmds[i]);
     }
     redir(cmds, STDOUT_FILENO);
+    return 1;
   }
 
   c = "<";
@@ -120,14 +122,17 @@ void command(char * cmd){
       printf("%s\n", cmds[i]);
     }
     redir(cmds, STDIN_FILENO);
+    return 1;
   }
   c = "|";
   if(strchr(cmd, *c) != NULL){
     char **cmds = separate_commands(cmd, "|");
     //printf("commands: %s\t%s\t%s\n", cmd[0], cmd[1], cmd[2]);
     pipin(cmds[0], cmds[1]);
+    return 1;
   }
   //ADD REST OF RUNNNING COMMAND OPTIONS
+  return 0;
 }
 
 int path(){
