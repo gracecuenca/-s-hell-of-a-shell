@@ -1,5 +1,10 @@
 #include "headers.h"
 
+/*======== void sighandler() ==========
+Inputs:  int signo
+Returns: nothing
+Handles signals and allows user to exit upon ctrl + C
+=====================================*/
 static void sighandler(int signo){
   //user wants to exit
   if (signo == SIGINT){
@@ -8,9 +13,12 @@ static void sighandler(int signo){
   }
 }
 
+/*======== void run() ==========
+Inputs:  char * line
+Returns: nothing
+Function that calls for parsing and executing
+===============================*/
 void run(char *line){
-  //DEBUGG NEED TO CLEAN LATER
-  //printf("%s\n", line);
   int l = strlen(line);
   if (l > 0 && line[l - 1] == '\n'){
     line[l - 1] = 0; //replaces new line with null
@@ -26,13 +34,18 @@ void run(char *line){
   }
 }
 
+/*======== int main() ==========
+Inputs:  nothing
+Returns: the shell
+Runs the stuffies in a forever while loop
+===============================*/
 int main(){
   while (1) {
     signal(SIGINT, sighandler);
     path();
     char line [100];
     fgets(line, sizeof(line), stdin);
-  
+
     run(line);
   }
   return 0;

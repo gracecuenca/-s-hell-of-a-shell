@@ -1,5 +1,11 @@
 #include "headers.h"
 
+/*======== int num_separated() ==========
+Inputs:  char * line
+         char * separator
+Returns: Number of tokens separated by separator
+Iterates through string using strsep
+=======================================*/
 int num_separated(char *line, char *separator){
   int i;
   char *copy = malloc(sizeof(char*) * strlen(line));
@@ -10,27 +16,40 @@ int num_separated(char *line, char *separator){
   return i;
 }
 
+/*======== char **separate_commands() ==========
+Inputs:  char *line
+         char *separator
+Returns: An array of pointers filled with inputed commands
+Separates input into commands separated by separator
+===============================================*/
 char **separate_commands(char *line, char *separator){
   int i = num_separated(line, separator);
   char **commands = calloc(i+1, sizeof(char **));
   for(i = 0; line; i++){
     commands[i] = strsep(&line, separator);
     commands[i] = trim(commands[i]);
-    //printf("SC:%s\n", commands[i]);
   }
   return commands;
 }
 
+/*======== int cd() ==========
+Inputs:  char **args
+Returns: nothing
+Utilizes chdir to switch between directories
+===============================*/
 int cd(char **args){
   if(!chdir(args[1])){
     return 0;
   }
-  //printf("Error number: %d\n", errno);
   printf("%s\n",strerror(errno));
   return 1; //shows problematic, but keeps shell running hopefully
 }
 
-//NEEDS EXECSSIVE TESTING
+/*======== int execute() ==========
+Inputs:  char **args
+Returns: nothing
+Constantly chekcs inputs and utilizers execvp() to run commands
+=================================*/
 int execute(char **args){
   if(!strcmp(args[0],"exit")){
     printf("\nlogout\n");
@@ -54,26 +73,13 @@ int execute(char **args){
   return 1;
 }
 
+/*======== void redir() ==========
+Inputs:  char ** file
+         int destination
+Returns: nothing
+Utilizes dup and dup2 (file redirection in C to run redirection commands
+================================*/
 void redir(char ** file, int destination){
-  /*
-    if(destination == STDOUT_FILENO){
-    int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
-    int x = dup(destination);
-    dup2(new_fd, destination);
-    printf("%s\n", file[0]);
-    dup2(x, destination);
-    close(new_fd);
-    }
-    if(destination == STDIN_FILENO){
-    //im tired, stuff ought to work with scanf, us it properly though
-    int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
-    int x = dup(destination);
-    dup2(new_fd, destination);
-    scanf("%s\n", file[0]);
-    dup2(x, destination);
-    close(new_fd);
-    }
-  */
   int new_fd = open(file[1], O_RDWR | O_CREAT, 0666);
   int x = dup(destination);
   dup2(new_fd, destination);
@@ -83,6 +89,12 @@ void redir(char ** file, int destination){
 
 }
 
+/*======== void pipin() ==========
+Inputs:  char * first
+         char * second
+Returns: nothing
+Utilizes popen() two open a pipe between first and second. fgets and fprint are then used to copy contents for first into second.
+================================*/
 void pipin(char * first, char * second){
   FILE * fp1 = popen(first, "r");
   FILE * fp2 = popen(second, "w");
@@ -94,19 +106,26 @@ void pipin(char * first, char * second){
   pclose(fp2);
 }
 
-//trimming trailing is causing too many bugs
+/*======== char * trim() ==========
+Inputs:  char * bush
+Returns: A trimmed bush!
+Eliminates the leading and trailing spaces of a string
+==================================*/
 char * trim(char * bush){
   int i = 0;
   if(bush[i] == ' '){
     while(bush[i] == ' '){
       i++;
     }
-    //printf("MSG: TRIMMING DONE\n");
   }
   return &bush[i];
 }
 
-//started func to run single command, must come back to edit
+/*======== int command() ==========
+Inputs:  char * cmd
+Returns: nothing
+Function that executes redirection and piping by detecting presence of '<', '>', '|'
+==================================*/
 int command(char * cmd){
   char *c = ">";
   if(strchr(cmd, *c) != NULL){
@@ -116,7 +135,6 @@ int command(char * cmd){
     redir(cmds, STDOUT_FILENO);
     return 1;
   }
-
   c = "<";
   if(strchr(cmd, *c) != NULL){
     printf("MSG: If for < is being run\n");
@@ -133,6 +151,11 @@ int command(char * cmd){
   return 0;
 }
 
+/*======== int path() ==========
+Inputs:  nothing
+Returns: nothing
+Displays the user's cwd
+==================================*/
 int path(){
   int status;
   int f = fork();
